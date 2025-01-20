@@ -7,3 +7,8 @@
     ```docker exec ```
 - Créer une image à partir d'un conteneur
     ```docker commit <nom_ou_id_conteneur> <nom_image>```
+
+
+- Construire une image à partir d'un dockerfile
+
+```docker build -t <nom_image> .```
