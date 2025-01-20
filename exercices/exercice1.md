@@ -21,4 +21,19 @@ Utilisez l’image officielle PHP avec Apache et montez le répertoire contenant
 
 3. Interagir avec le conteneur
 
+### Correction:
 
+1. Démarrer un conteneur avec du php
+```
+docker run -d php:8.2.27-apache
+```
+
+2. Copier les fichiers php dans le conteneur
+```
+docker cp <fichier_a_copier> <conteneur>:<destination>
+```
+
+3. Créer l'image à partir du conteneur
+```
+docker commit <conteneur> <nom_image>
+```
