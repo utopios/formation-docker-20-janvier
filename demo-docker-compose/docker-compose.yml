@@ -4,14 +4,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    healthcheck:
-      test: ["curl", "localhost"]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
+    volumes:
+      - mon-volume: var/cache
+    # healthcheck:
+    #   test: ["curl", "localhost"]
+    #   interval: 1m30s
+    #   timeout: 30s
+    #   retries: 5
+    #   start_period: 30s
     depends_on:
       - db
+    networks:
+      - network1
+      - network2
   nginx:
     image: nginx
     ports:
@@ -19,7 +24,21 @@ services:
     depends_on:
       symfony:
         condition: service_healthy
+  networks:
+      - network1
   db:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=secretpassword
+    networks:
+      - network2
+
+volumes:
+  mon-volume:
+    driver: local
+
+networks:
+  network1:
+    driver: bridge
+  network2:
+    driver: bridge
