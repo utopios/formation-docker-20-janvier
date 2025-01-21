@@ -1,0 +1,1 @@
+docker run -d -it -v $(pwd)/demo-volume/data:/data ubuntu bash
