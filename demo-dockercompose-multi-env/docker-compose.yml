@@ -1,0 +1,13 @@
+services:
+  ngnix:
+    build: 
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "8080:80"
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.web
+    environment:
+      - DATABASE_URL=value
