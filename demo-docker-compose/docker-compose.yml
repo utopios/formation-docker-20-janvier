@@ -4,20 +4,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - db
-  nginx:
-    image: nginx
     healthcheck:
       test: ["curl", "localhost"]
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
+    depends_on:
+      - db
+  nginx:
+    image: nginx
     ports:
       - "80:80"
     depends_on:
-      - symfony
+      symfony:
+        condition: service_healthy
   db:
     image: mysql
     environment:
