@@ -10,3 +10,15 @@ options:
 ```bash
 docker compose down
 ```
+
+#### Bonne pratique
+
+- Valeurs des variables d'environnements
+    - Utilisation des fichiers .env
+
+- Utiliser des images de confiance
+    - Avec Docker => DOCKER_CONTENT_TRUST=1
+
+- Minimiser les privilèges des conteneurs
+- Restreindre les capacités
+- Limiter les ressources

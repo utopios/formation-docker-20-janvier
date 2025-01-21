@@ -4,8 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    user: "1000:1000"
     volumes:
-      - mon-volume: var/cache
+      - mon-volume: var/cache:ro
     # healthcheck:
     #   test: ["curl", "localhost"]
     #   interval: 1m30s
@@ -19,17 +20,29 @@ services:
       - network2
   nginx:
     image: nginx
+    deploy:
+      limits:
+        memory: 512M
+        cpu: "1.0"
+      reservations:
+        memory: 256M
+        cpu: "0.5"
+    read_only: true
     ports:
       - "80:80"
     depends_on:
       symfony:
         condition: service_healthy
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
   networks:
       - network1
   db:
     image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=secretpassword
+      - MYSQL_ROOT_PASSWORD=${PASSWORD}
     networks:
       - network2
 
